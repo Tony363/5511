@@ -1,6 +1,7 @@
 import random
 import time
 import numpy as np
+
 def insertion_sort(
     a:list,
     n:int,
@@ -19,42 +20,45 @@ def insertion_sort(
     return a
 
 def merge(
-    a:list,
-    p:int,
-    q:int,
-    r:int,
-)->list:
-    nl = q - p + 1
-    nr = r - q 
-    l = [0] * (nl - 1)
-    r = [0] * (nr - 1)
-    for i in range(0, nl - 1):
-        l[i] = a[p + i]
+    a:list, 
+    p:int, 
+    q:int, 
+    r:int
+)->None:
+    nl = q - p + 1  # Number of elements in left subarray
+    nr = r - q      # Number of elements in right subarray
+    left = [0] * nl
+    right = [0] * nr
+
+    for i in range(nl):
+        left[i] = a[p + i]
+    for j in range(nr):
+        right[j] = a[q + j + 1]
+
     i = j = 0
     k = p
     while i < nl and j < nr:
-        if l[i] <= r[j]:
-            a[k] = l[i]
+        if left[i] <= right[j]:
+            a[k] = left[i]
             i += 1
-        elif a[k] == r[j]:
+        else:
+            a[k] = right[j]
             j += 1
         k += 1
-    
+
+    # Copy remaining elements of left, if any
     while i < nl:
-        a[k] = l[i]
+        a[k] = left[i]
         i += 1
         k += 1
+
+    # Copy remaining elements of right, if any
     while j < nr:
-        a[k] = r[j]
+        a[k] = right[j]
         j += 1
         k += 1
-    return a
 
-def merge_sort(
-    a:list,
-    p:int,
-    r:int,
-)->list:
+def merge_sort(a:list, p:int, r:int):
     if p >= r:
         return
     q = (p + r) // 2
