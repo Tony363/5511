@@ -1,13 +1,11 @@
 import random
-import time
-import numpy as np
 
 
 def insertion_sort(
     a:list,
     n:int,
-    ops_insert:int=0
 )->list:
+    global ops_insert
     for i in range(1,n):
         k = a[i]
         j = i - 1
@@ -16,7 +14,6 @@ def insertion_sort(
             ops_insert += 1
             j = j - 1
         a[j + 1] = k
-    print("OPERATIONS FOR INSERTION - ",ops_insert)
     return a
 
 def merge(
@@ -24,8 +21,8 @@ def merge(
     p:int, 
     q:int, 
     r:int,
-    ops_merge:int
 )->None:
+    global ops_merge
     nl = q - p + 1  # Number of elements in left subarray
     nr = r - q      # Number of elements in right subarray
     left = [0] * nl
@@ -61,29 +58,30 @@ def merge(
         a[k] = right[j]
         j += 1
         k += 1
-    return ops_merge
 
 def merge_sort(
     a:list, 
     p:int, 
     r:int,
-    ops_merge:int=0
 )->list:
     if p >= r:
         return
     q = (p + r) // 2
     merge_sort(a, p, q)
     merge_sort(a, q + 1, r)
-    ops_merge += merge(a, p, q, r,ops_merge=ops_merge)
-    print("MERGE SORT OPERATION COUNT - ",ops_merge)
+    merge(a, p, q, r)
     return a
 
 
 
 if __name__ == "__main__":
-    n = 10
+    ops_insert = ops_merge = 0
+    n = 100
     arr = [random.randint(0, n) for i in range(n)]
     print(insertion_sort(arr, n))
+    print("OPERATIONS FOR INSERTION - ",ops_insert)
     print(merge_sort(arr, 0, n - 1))
+    print("OPERATIONS FOR MERGEs - ",ops_merge)
+    
     # print(time_complexity_and_operations(insertion_sort, arr))
     # print(time_complexity_and_operations(merge_sort, arr))
