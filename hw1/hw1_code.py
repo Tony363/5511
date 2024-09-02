@@ -2,28 +2,29 @@ import random
 import time
 import numpy as np
 
+
 def insertion_sort(
     a:list,
     n:int,
+    ops_insert:int=0
 )->list:
-    omega = phi = 0
     for i in range(1,n):
         k = a[i]
         j = i - 1
         while j >= 0 and a[j] > k:
             a[j + 1] = a[j]
-            omega += 1
+            ops_insert += 1
             j = j - 1
         a[j + 1] = k
-        phi += 1 
-    print(omega,phi)
+    print("OPERATIONS FOR INSERTION - ",ops_insert)
     return a
 
 def merge(
     a:list, 
     p:int, 
     q:int, 
-    r:int
+    r:int,
+    ops_merge:int
 )->None:
     nl = q - p + 1  # Number of elements in left subarray
     nr = r - q      # Number of elements in right subarray
@@ -32,12 +33,15 @@ def merge(
 
     for i in range(nl):
         left[i] = a[p + i]
+        ops_merge += 1
     for j in range(nr):
         right[j] = a[q + j + 1]
+        ops_merge += 1
 
     i = j = 0
     k = p
     while i < nl and j < nr:
+        ops_merge += 1
         if left[i] <= right[j]:
             a[k] = left[i]
             i += 1
@@ -57,26 +61,24 @@ def merge(
         a[k] = right[j]
         j += 1
         k += 1
+    return ops_merge
 
-def merge_sort(a:list, p:int, r:int):
+def merge_sort(
+    a:list, 
+    p:int, 
+    r:int,
+    ops_merge:int=0
+)->list:
     if p >= r:
         return
     q = (p + r) // 2
     merge_sort(a, p, q)
     merge_sort(a, q + 1, r)
-    merge(a, p, q, r)
+    ops_merge += merge(a, p, q, r,ops_merge=ops_merge)
+    print("MERGE SORT OPERATION COUNT - ",ops_merge)
     return a
 
-def time_complexity_and_operations(sort_func, arr):
-    start_time = time.time()
-    if sort_func == merge_sort:
-        result = sort_func(arr.copy())
-        end_time = time.time()
-        return end_time - start_time, result
-    else:
-        comparisons, swaps = sort_func(arr.copy())
-        end_time = time.time()
-        return end_time - start_time, comparisons, swaps
+
 
 if __name__ == "__main__":
     n = 10
