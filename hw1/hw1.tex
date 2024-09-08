@@ -6,6 +6,7 @@
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{hyperref}
 \usetikzlibrary{trees}
 
 % Define colors for listings
@@ -208,7 +209,6 @@ The Insertion Sort algorithm is implemented in Python as follows:
         a:list,
         n:int,
     )->list:
-        global ops_insert
         for i in range(1,n):
             k = a[i]
             j = i - 1
@@ -231,7 +231,6 @@ The Merge Sort algorithm is implemented with a focus on comparing and merging el
         q:int, 
         r:int,
     )->None:
-        global ops_merge
         nl = q - p + 1  # Number of elements in left subarray
         nr = r - q      # Number of elements in right subarray
         left = [0] * nl
@@ -239,15 +238,12 @@ The Merge Sort algorithm is implemented with a focus on comparing and merging el
     
         for i in range(nl):
             left[i] = a[p + i]
-            ops_merge += 1
         for j in range(nr):
             right[j] = a[q + j + 1]
-            ops_merge += 1
     
         i = j = 0
         k = p
         while i < nl and j < nr:
-            ops_merge += 1
             if left[i] <= right[j]:
                 a[k] = left[i]
                 i += 1
@@ -285,7 +281,10 @@ The Merge Sort algorithm is implemented with a focus on comparing and merging el
 For merge sort, I put a counter operation in the assigning of values to the left and right sub array loops and in the while loop where the core merging of left and right sub arrays takes place. The remaining loops in the merge function is non as consequential to the core merging algorithm as they just assign back to the array whatever is left.
 
 \subsection{Implementation Output}
-\includegraphics[scale=0.5]{output.png}
-
+\begin{center}
+\includegraphics[scale=0.5]{complexity.jpg}
+    
+\end{center}
+This graph depicts the growth of executed operations between insertion sort and merge sort. Insertion sort operation counts are collected every ith loop of n. Merge sort operation counts are collected every 2nd recursive call. 99 operation counters are collected from both insertion sort and merge sort. The actual executed code is found  \href{https://github.com/Tony363/5511/blob/main/hw1/hw1_code.py}{here}
 \printbibliography
 \end{document}
