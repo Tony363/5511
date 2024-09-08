@@ -1,19 +1,20 @@
 import random
-
+import matplotlib.pyplot as plt
 
 def insertion_sort(
     a:list,
     n:int,
 )->list:
-    global ops_insert
+    global ops_insert, counter
     for i in range(1,n):
         k = a[i]
         j = i - 1
         while j >= 0 and a[j] > k:
             a[j + 1] = a[j]
-            ops_insert += 1
+            counter += 1; 
             j = j - 1
         a[j + 1] = k
+        ops_insert += (counter,)
     return a
 
 def merge(
@@ -22,7 +23,7 @@ def merge(
     q:int, 
     r:int,
 )->None:
-    global ops_merge
+    global counter
     nl = q - p + 1  # Number of elements in left subarray
     nr = r - q      # Number of elements in right subarray
     left = [0] * nl
@@ -30,15 +31,15 @@ def merge(
 
     for i in range(nl):
         left[i] = a[p + i]
-        ops_merge += 1
+        counter += 1
     for j in range(nr):
         right[j] = a[q + j + 1]
-        ops_merge += 1
+        counter += 1
 
     i = j = 0
     k = p
     while i < nl and j < nr:
-        ops_merge += 1
+        counter += 1
         if left[i] <= right[j]:
             a[k] = left[i]
             i += 1
@@ -64,24 +65,45 @@ def merge_sort(
     p:int, 
     r:int,
 )->list:
+    global ops_merge,counter
     if p >= r:
         return
     q = (p + r) // 2
     merge_sort(a, p, q)
+    ops_merge += (counter,)
     merge_sort(a, q + 1, r)
+    ops_merge += (counter,)
     merge(a, p, q, r)
     return a
+
+def plot_operations(
+    ops_insert:tuple,
+    ops_merge:tuple,
+)->None:
+    print(len(ops_insert),len(ops_merge))
+    plt.plot(list(range(len(ops_insert))),ops_insert, label='Insertion Sort')
+    plt.plot(list(range(len(ops_merge))),ops_merge, label='Merge Sort')
+    plt.xlabel('Input Size')
+    plt.ylabel('Operations')
+    plt.title('Insertion Sort vs Merge Sort')
+    plt.legend()
+    plt.show()   
+    plt.savefig('complexity.jpg') 
 
 
 
 if __name__ == "__main__":
-    ops_insert = ops_merge = 0
+    ops_insert,ops_merge = (),()
     n = 100
+    counter = 0
     arr = [random.randint(0, n) for i in range(n)]
     print(insertion_sort(arr, n))
-    print("OPERATIONS FOR INSERTION - ",ops_insert)
-    print(merge_sort(arr, 0, n - 1))
-    print("OPERATIONS FOR MERGEs - ",ops_merge)
+    print("OPERATIONS FOR INSERTION - ",counter)
+    print("INSERTION SORT LOOPS", n - 1)
     
-    # print(time_complexity_and_operations(insertion_sort, arr))
-    # print(time_complexity_and_operations(merge_sort, arr))
+    counter = 0
+    print(merge_sort(arr, 0, n - 1))
+    print("OPERATIONS FOR MERGE - ",max(ops_merge))
+    print("MERGE RECURSIVE CALLS - ",counter)
+    plot_operations(ops_insert, ops_merge[::2])
+    
