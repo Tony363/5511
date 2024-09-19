@@ -75,12 +75,16 @@ def main():
     # Plotting the results
     array_sizes = [res['Array Size'] for res in results]
     avg_iterations = [res['Average Iterations'] for res in results]
+    avg_successful = [res['Average Successful'] for res in results]
+    avg_unsuccessful = [res['Average Unsuccessful'] for res in results]
     theoretical_values = [res['Theoretical'] for res in results]
 
     plt.figure(figsize=(10, 6))
     plt.plot(array_sizes, avg_iterations, marker='o', label='Empirical Average Iterations')
     plt.plot(array_sizes, theoretical_values, marker='x', linestyle='--', label='Theoretical Average Iterations')
     plt.xscale('log')
+    plt.plot(array_sizes, avg_successful, marker='v', label='Average Successful Iterations')
+    plt.plot(array_sizes, avg_unsuccessful, marker='^', label='Average Unsuccessful Iterations')
     plt.xlabel('Array Size (log scale)')
     plt.ylabel('Average Number of Iterations')
     plt.title('Binary Search Average Iterations vs. Array Size')
