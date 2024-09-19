@@ -1,0 +1,146 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+\title{5511 hw2}
+\author{Tony Siu}
+\date{September 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Derivation of average cost for binary search for sorted array \cite{Knuth1998}\cite{chatgpt2024}}
+
+The average number of iterations performed by binary search depends on the probability of each element being searched. The average case is different for successful searches and unsuccessful searches. It will be assumed that each element is equally likely to be searched for successful searches. For unsuccessful searches, it will be assumed that the interval between and outside elements are equally likely to be searched. The average case for successful searches is the number of iterations required to search every element exactly once, divided by n, the number of elements. The average case for unsuccessful searches is the number of iterations required to search an element within every interval exactly once, divided by the n + 1 intervals.
+
+\subsection{Successful Search}
+
+In the binary tree representation, a successful search can be represented by a path from the root to the target node, called an internal path. The length of a path is the number of edges (connections between nodes) that the path passes through. The number of iterations performed by a search, given that the corresponding path has length l, is l + 1 counting the initial iteration. The internal path length is the sum of the lengths of all unique internal paths. Since there is only one path from the root to any single node, each internal path represents a search for a specific element. If there are n elements, which is a positive integer, and the internal path length is $I(n)$, then the average number of iterations for a successful search $T(n) = 1 + \frac{I(n)}{n}$, with one iteration added to count the initial iteration. Since binary search is the optimal algorithm for searching with comparisons, this problem is reduced to calculating the minimum internal path length of all binary trees with n nodes, which is equal to: $$I(n) = \sum_{k=1}^n \left \lfloor {log_2 (k)}\right \rfloor$$
+For example, in a 7-element array, the root requires one iteration, the two elements below the root require two iterations, and the four elements below require three iterations. In this case, the internal path length is:
+
+$$\sum_{k=1}^{7} \left \lfloor {log_2 (k)}\right \rfloor = 0 + 2(1) + 4(2) = 2 + 8 = 10$$
+
+The average number of iterations would be $1 + \frac{10}{7} = 2\frac{3}{7}$ based on the equation for the average case. The sum for $I(n)$ can be simplified to:
+
+$$I(n) = \sum_{k=1}^n \left \lfloor {log_2 (k)}\right \rfloor = (n + 1) \left \lfloor {log_2 (n + 1)}\right \rfloor - 2^{\left \lfloor {log_2 (n + 1)}\right \rfloor + 1} + 2$$
+
+Substituting the equation for $I(n)$ into the equation for $T(n)$:
+
+$$I(n) = 1 + \frac{(n + 1)\left \lfloor {log_2 (n + 1)}\right \rfloor - 2^{\left \lfloor {log_2 (n + 1)}\right \rfloor + 1} + 2}{n} = \left \lfloor {log_2 (n)}\right \rfloor  + 1  - (2^{\left \lfloor {log_2 (n)}\right \rfloor  + 1} - \left \lfloor {log_2 (n)}\right \rfloor  - 2$$
+
+For integer n, this is equivalent to the equation for the average case on a successful search specified above.
+\subsection{Unsucessful Search}
+
+Unsuccessful searches can be represented by augmenting the tree with extenal nodes, which forms an extended binary tree. If an internal node, or a node present in the tree, has fewer than two child nodes, then additional child nodes, called external nodes, are added so that each internal had two children. By doing so, an unsuccessful search can be represented as a path to an external node, whose parent is the single element that remains during the last iteration. An external path is a path path from the root to an external node. The external path length is the sum of the lengths of all unique external paths. If there are n elements, which is a positive integer, and the external path length  is $E(n)$ then the average number of iterations for an unsuccessful search  $T'(n) = \frac{E(n)}{n + 1}$, with the one iteration added to count the initial iteration. The external path length is divided by n + 1  $n + 1$ instead of n because there are $n + 1$ external paths,representing the intervals between and outside the elements of the array.
+
+
+This problem can similarly be reduced to determining the minimum external path length of all binary trees with n nodes. For all binary trees, the external path length is equal to the internal path length plus 2 n 2n. Substituting the equation for $I(n)$:
+
+$$E(n) = I(n) + 2n = [(n + 1)\left \lfloor {log_2 (n + 1)}\right \rfloor - 2^{\left \lfloor {log_2 (n + 1)}\right \rfloor + 1} + 2] + 2n = (n + 1)(\left \lfloor {log_2 (n)}\right \rfloor + 2) - 2^{\left \lfloor {log_2 (n)}\right \rfloor + 1}$$
+
+Substituting the equation for $E (n)$  into the equation for $T^\prime(n)$, the average case for unsuccessful searches can be determined:
+
+$$T^\prime(n) = \frac{(n + 1)(\left \lfloor {log_2 (n)}\right \rfloor + 2) - 2^{\left \lfloor {log_2 (n)}\right \rfloor + 1}}{n + 1} = \left \lfloor {log_2 (n)}\right \rfloor + 2 - \frac{2^{\left \lfloor {log_2 (n)}\right \rfloor + 1}}{n + 1}$$
+
+\section{Case studies of Binary Search given assumptions}
+\subsection{Assumption 1}
+
+\emph{The value to be searched appears at any position in the array with the same probability, which is also the probability that there is no such a value in the array.}
+
+In this case, the probability that the value is at any specific position is pp, and the probability that the value is not in the array is also pp. Since there are n positions plus the possibility of the value not being in the array, the total probabilities sum up to $(n + 1)p = 1$ Thus, $p = \frac{1}{n + 1}$.
+
+\begin{itemize}
+    \item Probability of successful search: $P_{success} = n \times p = \frac{n}{n + 1}$
+     \item Probability of unsuccessful search: $P_{failure} = p = \frac{1}{n + 1}$
+\end{itemize}
+
+The average number of iterations for a successful search ($T_g$) and an unsuccessful search ($T_u$) can be approximated as:
+
+\begin{itemize}
+    \item Successful search $T_s \approx log_2n$
+     \item Unsuccessful search $T_s \approx log_2n + 1$
+\end{itemize}
+
+Under Assumption 1:
+
+\begin{flalign}
+    \begin{aligned}
+    Expected Iterations_1 = & P_{success} \times T_{s} + P_{failure} \times T_{u} \\
+    & = (\frac{n}{n + 1} \times log_2n) + (\frac{1}{n + 1} \times (log_2n + 1))\\
+    & = log_2n(\frac{n}{n + 1} + \frac{1}{n + 1}) + \frac{1}{n + 1}\\
+    & = log_2n + \frac{1}{n + 1} 
+    \end{aligned}  
+\end{flalign}
+  
+
+
+
+
+
+\subsection{Assumption 2}
+
+\emph{The probability of the value to be in the array is the same as the probability of the opposite case (the value is not there), and when it is in the array the probability for it to appear in any position is the same.}
+
+Here, the probability that the value is in the array is 0.50.5, and if it is, the probability that it's at any specific position is 1n $\frac{1}{n}$. Therefore, the total probability that the value is at a specific position is $0.5 \times \frac{1}{n} = \frac{1}{2n}$. 
+
+\begin{itemize}
+    \item Probability of successful search: $P_{success} = 0.5, P_{success_i} = \frac{\frac{1}{2}}{n}$ 
+     \item Probability of unsuccessful search: $P_{failure} = 0.5$
+\end{itemize}
+
+
+Under Assumption 2:
+\begin{flalign}
+    \begin{aligned}
+    Expected Iterations_2 = & P_{success} \times T_{s} + P_{failure} \times T_{u} \\
+    & = (0.5 \times log_2n) + (0.5 \times (log_2n + 1))\\
+    & = log_2n + 0.5
+    \end{aligned}  
+\end{flalign}
+
+
+
+
+
+\subsection{Comparison}
+
+The average running time (in terms of iterations) under Assumption 2 is higher than under Assumption 1. This is because under Assumption 2, there's a higher probability of an unsuccessful search (50\% vs. a much smaller $\frac{1}{n + 1}$ in Assumption 1), and unsuccessful searches require more iterations on average. Therefore, the algorithm does not have the same average running time in both situations, and the average running time is higher under Assumption 2.
+
+
+
+\section{Why average cost and worst cost of binary search is both $O(log n)$\cite{chatgpt2024}}
+
+The average cost and worst-case cost of the binary search algorithm are both $O(log⁡n)$ because they both grow logarithmically with the size of the input n. The difference is a constant or a lower-order term, which doesn't affect the Big O classification.
+
+$$T_{worst}(n) = \left \lceil {log_2n}\right \rceil$$
+$$T_{average}(n)  \approx log_2n + c$$
+
+
+\subsection{Binary Search Complexity}
+
+\textbf{Worst-Case Cost}
+\begin{itemize}
+    \item \textbf{Scenario:} The worst-case occurs when the target value is not in the array or is located in such a way that requires the maximum number of iterations to find.
+    \item {\textbf{Iterations Needed:} The maximum number of iterations (comparisons) in binary search is $\left \lceil {log_2 (n)}\right \rceil$, where $\left \lceil {x}\right \rceil$, denotes the smallest integer greater than or equal to x.}
+    \item {\textbf{Explanation:} Each iteration divides the search interval in half. Therefore, after $log⁡_2n$ iterations, the interval reduces to a single element.}
+    \item \textbf{Result:} The worst-case cost is proportional to log⁡n.
+\end{itemize}
+
+
+\textbf{Average-Case Cost}
+\begin{itemize}
+    \item \textbf{Scenario:} Calculated under the assumption that each element (and interval between elements for unsuccessful searches) is equally likely to be searched.
+    \item \textbf{Iterations Needed:} As derived in the simplified equations, the average number of iterations for successful and unsuccessful searches are both approximately $log⁡_2n$, but slightly less than the worst-case cost.
+    \item \textbf{Explanation:} Each iteration divides the search interval in half. Therefore, after $log⁡_2n$ iterations, the interval reduces to a single element.
+    \item \textbf{Result:} The average-case cost is also proportional to $log⁡_n$.
+\end{itemize}
+
+
+\section{Estimate average cost with program}
+
+\printbibliography
+
+\end{document}
