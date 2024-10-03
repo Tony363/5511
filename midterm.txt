@@ -1,0 +1,11 @@
+given array, and algorithm applied to it, what happens?
+algorithm datastructure memory tracing
+given algorithm, asked what will happen
+analyze performance, what will happen to given dataset
+no detailed math proofs
+exam similar to theoretical part of hw, no longer explanation
+harder part given problem, come up with algorithm to solve
+read problem very carefully
+May need to come up with  T(n) = O(n), not too picky about mathematical details,
+    conceptual correctness
+generally give worst best average case
