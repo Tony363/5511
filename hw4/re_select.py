@@ -1,5 +1,10 @@
-def selection_sort_recursive(arr, start=0):
-    n = len(arr)
+def selection_sort(arr,n):
+    end = len(arr)
+    if n >= end - 1:
+        return
+    selection_sort_recursive(arr,n - end, end)
+    
+def selection_sort_recursive(arr, start, n):
     if start >= n - 1:
         return
     min_index = start
@@ -7,7 +12,7 @@ def selection_sort_recursive(arr, start=0):
         if arr[i] < arr[min_index]:
             min_index = i
     arr[start], arr[min_index] = arr[min_index], arr[start]
-    selection_sort_recursive(arr, start + 1)
+    selection_sort_recursive(arr, start + 1,n)
 
 # Unit Test
 def test_selection_sort():

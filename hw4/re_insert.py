@@ -1,6 +1,9 @@
-def insertion_sort_recursive(arr, n=None):
-    if n is None:
-        n = len(arr)
+def insertion_sort(arr,n):
+    if n <= 1:
+        return
+    insertion_sort_recursive(arr, n)
+
+def insertion_sort_recursive(arr, n):
     if n <= 1:
         return
     insertion_sort_recursive(arr, n - 1)
@@ -14,12 +17,12 @@ def insertion_sort_recursive(arr, n=None):
 # Unit Test
 def test_insertion_sort():
     arr = [12, 11, 13, 5, 6]
-    insertion_sort_recursive(arr)
+    insertion_sort_recursive(arr, len(arr))
     assert arr == [5, 6, 11, 12, 13]
     print("Insertion Sort Test Passed.")
 
 if __name__ == "__main__":
     test_insertion_sort()
     arr = list(map(int, input("Enter integers separated by space: ").split()))
-    insertion_sort_recursive(arr)
+    insertion_sort_recursive(arr,len(arr))
     print("Sorted array:", arr)

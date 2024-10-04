@@ -9,3 +9,5 @@ read problem very carefully
 May need to come up with  T(n) = O(n), not too picky about mathematical details,
     conceptual correctness
 generally give worst best average case
+
+lecture notes and analytical parts of assignments
