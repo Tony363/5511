@@ -65,7 +65,7 @@ def hoare_partition(
 
 def main()->None:
     array_sizes = [10**i for i in range(1, 7)]  # Sizes from 10^1 to 10^6
-    # num_trials = 5  # Number of trials per size
+    num_trials = 5  # Number of trials per size
     results = {
         'lomuto': {'sizes': [], 'core_operations': []},
         'hoare': {'sizes': [], 'core_operations': []}
@@ -74,29 +74,35 @@ def main()->None:
     for size in array_sizes:
         lomuto_core_ops = 0
         hoare_core_ops = 0
-    
-        # Generate random array
-        A = random.sample(range(size * 10), size)
-        B = A.copy()
         
-        # Lomuto Partition
-        counters_lomuto = {'core_operations': 0}
-        quicksort(A, 0, len(A) - 1, lomuto_partition, counters_lomuto)
-        lomuto_core_ops += counters_lomuto['core_operations']
-        
-        # Hoare Partition
-        counters_hoare = {'core_operations': 0}
-        quicksort(B, 0, len(B) - 1, hoare_partition, counters_hoare)
-        hoare_core_ops += counters_hoare['core_operations']
-        
-        
+        for _ in range(num_trials):
+            # Generate random array
+            A = random.sample(range(size * 10), size)
+            B = A.copy()
+
+            # Lomuto Partition
+            counters_lomuto = {'core_operations': 0}
+            quicksort(A, 0, len(A) - 1, lomuto_partition, counters_lomuto)
+            lomuto_core_ops += counters_lomuto['core_operations']
+
+            # Hoare Partition
+            counters_hoare = {'core_operations': 0}
+            quicksort(B, 0, len(B) - 1, hoare_partition, counters_hoare)
+            hoare_core_ops += counters_hoare['core_operations']
+
+        # Average the results
+        lomuto_avg_core_ops = lomuto_core_ops / num_trials
+        hoare_avg_core_ops = hoare_core_ops / num_trials
+
         # Store results
         results['lomuto']['sizes'].append(size)
-        results['lomuto']['core_operations'].append(lomuto_core_ops)
-        
+        results['lomuto']['core_operations'].append(lomuto_avg_core_ops)
+
         results['hoare']['sizes'].append(size)
-        results['hoare']['core_operations'].append(hoare_core_ops)
-   
+        results['hoare']['core_operations'].append(hoare_avg_core_ops)
+            
+    
+    print(results)
     plot(results)
    
 def plot(results:dict)->None:     
