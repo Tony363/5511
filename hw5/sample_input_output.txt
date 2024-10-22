@@ -1,0 +1,34 @@
+Enter command (search, insert, delete, walk, print, exit): insert
+Enter word: apple
+Occurrences before insertion: 0
+
+Enter command (search, insert, delete, walk, print, exit): insert
+Enter word: banana
+Occurrences before insertion: 0
+
+Enter command (search, insert, delete, walk, print, exit): insert
+Enter word: apple
+Occurrences before insertion: 1
+
+Enter command (search, insert, delete, walk, print, exit): search
+Enter word: apple
+Occurrences of 'apple': 2
+
+Enter command (search, insert, delete, walk, print, exit): delete
+Enter word: apple
+Occurrences before deletion: 2
+
+Enter command (search, insert, delete, walk, print, exit): search
+Enter word: apple
+Occurrences of 'apple': 1
+
+Enter command (search, insert, delete, walk, print, exit): walk
+apple
+banana
+
+Enter command (search, insert, delete, walk, print, exit): print
+R----apple(1)
+     R----banana(1)
+
+Enter command (search, insert, delete, walk, print, exit): exit
+
