@@ -1,0 +1,46 @@
+Enter command (search, insert, delete, walk, print, exit): insert
+Enter word to insert: apple
+'apple' inserted successfully.
+
+Enter command (search, insert, delete, walk, print, exit): insert
+Enter word to insert: banana
+'banana' inserted successfully.
+
+Enter command (search, insert, delete, walk, print, exit): insert
+Enter word to insert: cherry
+'cherry' inserted successfully.
+
+Enter command (search, insert, delete, walk, print, exit): insert
+Enter word to insert: banana
+'banana' already exists in the tree.
+
+Enter command (search, insert, delete, walk, print, exit): walk
+Tree Walk (In-order Traversal):
+apple
+banana
+cherry
+
+Enter command (search, insert, delete, walk, print, exit): search
+Enter word to search: banana
+Occurrences of 'banana': 1
+
+Enter command (search, insert, delete, walk, print, exit): delete
+Enter word to delete: banana
+'banana' deleted successfully.
+
+Enter command (search, insert, delete, walk, print, exit): walk
+Tree Walk (In-order Traversal):
+apple
+cherry
+
+Enter command (search, insert, delete, walk, print, exit): delete
+Enter word to delete: banana
+'banana' does not exist in the tree.
+
+Enter command (search, insert, delete, walk, print, exit): print
+Tree Structure:
+R----apple
+     R----cherry
+
+Enter command (search, insert, delete, walk, print, exit): exit
+Exiting.

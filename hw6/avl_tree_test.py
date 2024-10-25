@@ -6,209 +6,265 @@ class AVLNode:
         self.height = 1  # New node is initially added at leaf
 
 class AVLTree:
-    def insert(self, root, key):
-        # Perform the normal BST insertion
-        if not root:
-            return AVLNode(key)
-        elif key < root.key:
-            root.left = self.insert(root.left, key)
-        elif key > root.key:
-            root.right = self.insert(root.right, key)
-        else:
-            # Duplicate keys are ignored
-            return root
+    def __init__(self):
+        self.root = None
 
-        # Update the height of the ancestor node
-        root.height = 1 + max(self.getHeight(root.left),
-                              self.getHeight(root.right))
-
-        # Get the balance factor
-        balance = self.getBalance(root)
-
-        # Balance the tree
-        # Left Left Case
-        if balance > 1 and key < root.left.key:
-            return self.rightRotate(root)
-
-        # Right Right Case
-        if balance < -1 and key > root.right.key:
-            return self.leftRotate(root)
-
-        # Left Right Case
-        if balance > 1 and key > root.left.key:
-            root.left = self.leftRotate(root.left)
-            return self.rightRotate(root)
-
-        # Right Left Case
-        if balance < -1 and key < root.right.key:
-            root.right = self.rightRotate(root.right)
-            return self.leftRotate(root)
-
-        return root
-
-    def delete(self, root, key):
-        # Perform standard BST delete
-        if not root:
-            return root
-        elif key < root.key:
-            root.left = self.delete(root.left, key)
-        elif key > root.key:
-            root.right = self.delete(root.right, key)
-        else:
-            # Node with only one child or no child
-            if not root.left:
-                return root.right
-            elif not root.right:
-                return root.left
-
-            # Node with two children
-            temp = self.minValueNode(root.right)
-            root.key = temp.key
-            root.right = self.delete(root.right, temp.key)
-
-        if not root:
-            return root
-
-        # Update the height
-        root.height = 1 + max(self.getHeight(root.left),
-                              self.getHeight(root.right))
-
-        # Balance the node
-        balance = self.getBalance(root)
-
-        # Left Left Case
-        if balance > 1 and self.getBalance(root.left) >= 0:
-            return self.rightRotate(root)
-
-        # Left Right Case
-        if balance > 1 and self.getBalance(root.left) < 0:
-            root.left = self.leftRotate(root.left)
-            return self.rightRotate(root)
-
-        # Right Right Case
-        if balance < -1 and self.getBalance(root.right) <= 0:
-            return self.leftRotate(root)
-
-        # Right Left Case
-        if balance < -1 and self.getBalance(root.right) > 0:
-            root.right = self.rightRotate(root.right)
-            return self.leftRotate(root)
-
-        return root
-
-    def search(self, root, key):
-        if not root or root.key == key:
-            return root
-
-        if key < root.key:
-            return self.search(root.left, key)
-        else:
-            return self.search(root.right, key)
-
-    def minValueNode(self, node):
-        current = node
-        while current.left:
-            current = current.left
-        return current
-
-    def getHeight(self, node):
+    # Utility function to get the height of the node
+    def get_height(self, node):
         if not node:
             return 0
         return node.height
 
-    def getBalance(self, node):
+    # Utility function to get balance factor of node
+    def get_balance(self, node):
         if not node:
             return 0
-        return self.getHeight(node.left) - self.getHeight(node.right)
+        return self.get_height(node.left) - self.get_height(node.right)
 
-    def leftRotate(self, z):
-        y = z.right
-        T2 = y.left
-
-        # Rotation
-        y.left = z
-        z.right = T2
-
-        # Update heights
-        z.height = 1 + max(self.getHeight(z.left),
-                           self.getHeight(z.right))
-        y.height = 1 + max(self.getHeight(y.left),
-                           self.getHeight(y.right))
-
-        return y
-
-    def rightRotate(self, y):
+    # Right rotate subtree rooted with y
+    def right_rotate(self, y):
         x = y.left
         T2 = x.right
 
-        # Rotation
+        # Perform rotation
         x.right = y
         y.left = T2
 
         # Update heights
-        y.height = 1 + max(self.getHeight(y.left),
-                           self.getHeight(y.right))
-        x.height = 1 + max(self.getHeight(x.left),
-                           self.getHeight(x.right))
+        y.height = 1 + max(self.get_height(y.left),
+                           self.get_height(y.right))
+        x.height = 1 + max(self.get_height(x.left),
+                           self.get_height(x.right))
 
+        # Return new root
         return x
 
-    def preOrder(self, root):
-        if root:
-            print("{0} ".format(root.key), end="")
-            self.preOrder(root.left)
-            self.preOrder(root.right)
+    # Left rotate subtree rooted with x
+    def left_rotate(self, x):
+        y = x.right
+        T2 = y.left
 
-    def inOrder(self, root):
-        if root:
-            self.inOrder(root.left)
-            print("{0} ".format(root.key), end="")
-            self.inOrder(root.right)
+        # Perform rotation
+        y.left = x
+        x.right = T2
 
-    def postOrder(self, root):
-        if root:
-            self.postOrder(root.left)
-            self.postOrder(root.right)
-            print("{0} ".format(root.key), end="")
+        # Update heights
+        x.height = 1 + max(self.get_height(x.left),
+                           self.get_height(x.right))
+        y.height = 1 + max(self.get_height(y.left),
+                           self.get_height(y.right))
 
-# Testing the AVL Tree implementation
-if __name__ == '__main__':
-    avl_tree = AVLTree()
-    root = None
+        # Return new root
+        return y
 
-    # Insert nodes into the AVL tree
-    nodes_to_insert = [10, 20, 30, 40, 50, 25]
-    print("Inserting nodes:", nodes_to_insert)
-    for node in nodes_to_insert:
-        root = avl_tree.insert(root, node)
+    # Insert a key into the AVL tree
+    def insert(self, key):
+        inserted_before = self.search_count(self.root, key)
+        if inserted_before > 0:
+            # Duplicate found, ignore insertion
+            return inserted_before
+        self.root = self._insert(self.root, key)
+        return 0  # Indicate that insertion was successful
 
-    # Display the tree traversals
-    print("\nPreorder traversal after insertions:")
-    avl_tree.preOrder(root)
-    print("\nInorder traversal after insertions:")
-    avl_tree.inOrder(root)
-    print("\nPostorder traversal after insertions:")
-    avl_tree.postOrder(root)
+    def _insert(self, node, key):
+        # 1. Perform normal BST insertion
+        if not node:
+            return AVLNode(key)
+        elif key < node.key:
+            node.left = self._insert(node.left, key)
+        elif key > node.key:
+            node.right = self._insert(node.right, key)
+        else:
+            # Duplicate keys are not allowed
+            return node
 
-    # Search for a node
-    key_to_search = 25
-    found_node = avl_tree.search(root, key_to_search)
-    print("\n\nSearching for key {}:".format(key_to_search))
-    if found_node:
-        print("Key {} found in the AVL tree.".format(key_to_search))
-    else:
-        print("Key {} not found in the AVL tree.".format(key_to_search))
+        # 2. Update height of this ancestor node
+        node.height = 1 + max(self.get_height(node.left),
+                              self.get_height(node.right))
 
-    # Delete a node
-    key_to_delete = 30
-    print("\nDeleting key {} from the AVL tree.".format(key_to_delete))
-    root = avl_tree.delete(root, key_to_delete)
+        # 3. Get the balance factor
+        balance = self.get_balance(node)
 
-    # Display the tree after deletion
-    print("\nPreorder traversal after deletion:")
-    avl_tree.preOrder(root)
-    print("\nInorder traversal after deletion:")
-    avl_tree.inOrder(root)
-    print("\nPostorder traversal after deletion:")
-    avl_tree.postOrder(root)
+        # 4. If node is unbalanced, then try the four cases
 
+        # Left Left Case
+        if balance > 1 and key < node.left.key:
+            return self.right_rotate(node)
+
+        # Right Right Case
+        if balance < -1 and key > node.right.key:
+            return self.left_rotate(node)
+
+        # Left Right Case
+        if balance > 1 and key > node.left.key:
+            node.left = self.left_rotate(node.left)
+            return self.right_rotate(node)
+
+        # Right Left Case
+        if balance < -1 and key < node.right.key:
+            node.right = self.right_rotate(node.right)
+            return self.left_rotate(node)
+
+        # Return the unchanged node pointer
+        return node
+
+    # Function to delete a node
+    def delete(self, key):
+        deleted_before = self.search_count(self.root, key)
+        if deleted_before == 0:
+            # Key not found
+            return deleted_before
+        self.root = self._delete(self.root, key)
+        return deleted_before
+
+    def _delete(self, node, key):
+        # Step 1: Perform standard BST delete
+        if not node:
+            return node
+
+        elif key < node.key:
+            node.left = self._delete(node.left, key)
+
+        elif key > node.key:
+            node.right = self._delete(node.right, key)
+
+        else:
+            # Node with only one child or no child
+            if node.left is None:
+                temp = node.right
+                node = None
+                return temp
+
+            elif node.right is None:
+                temp = node.left
+                node = None
+                return temp
+
+            # Node with two children: Get the inorder successor
+            temp = self.get_min_value_node(node.right)
+
+            node.key = temp.key
+
+            node.right = self._delete(node.right, temp.key)
+
+        # If the tree had only one node then return
+        if node is None:
+            return node
+
+        # Step 2: Update the height of the current node
+        node.height = 1 + max(self.get_height(node.left),
+                              self.get_height(node.right))
+
+        # Step 3: Get the balance factor
+        balance = self.get_balance(node)
+
+        # Step 4: If node is unbalanced, then try the four cases
+
+        # Left Left Case
+        if balance > 1 and self.get_balance(node.left) >= 0:
+            return self.right_rotate(node)
+
+        # Left Right Case
+        if balance > 1 and self.get_balance(node.left) < 0:
+            node.left = self.left_rotate(node.left)
+            return self.right_rotate(node)
+
+        # Right Right Case
+        if balance < -1 and self.get_balance(node.right) <= 0:
+            return self.left_rotate(node)
+
+        # Right Left Case
+        if balance < -1 and self.get_balance(node.right) > 0:
+            node.right = self.right_rotate(node.right)
+            return self.left_rotate(node)
+
+        return node
+
+    # Function to search for a key and return count (0 or 1)
+    def search_count(self, node, key):
+        if not node:
+            return 0
+        if key == node.key:
+            return 1
+        elif key < node.key:
+            return self.search_count(node.left, key)
+        else:
+            return self.search_count(node.right, key)
+
+    # Function to perform in-order traversal
+    def tree_walk(self):
+        self._tree_walk(self.root)
+
+    def _tree_walk(self, node):
+        if node is not None:
+            self._tree_walk(node.left)
+            print(node.key)
+            self._tree_walk(node.right)
+
+    # Function to print the tree structure
+    def tree_print(self):
+        self._tree_print(self.root, "", True)
+
+    def _tree_print(self, node, indent, last):
+        if node is not None:
+            print(indent, end='')
+            if last:
+                print("R----", end='')
+                indent += "     "
+            else:
+                print("L----", end='')
+                indent += "|    "
+            print(node.key)
+            self._tree_print(node.left, indent, False)
+            self._tree_print(node.right, indent, True)
+
+    # Function to get the node with the smallest key
+    def get_min_value_node(self, node):
+        current = node
+        while current.left is not None:
+            current = current.left
+        return current
+
+    # Function to search for a key and return existence (1) or not (0)
+    def tree_search(self, key):
+        return self.search_count(self.root, key)
+
+# Sample Run Demonstration
+def main():
+    avl = AVLTree()
+    while True:
+        command = input("Enter command (search, insert, delete, walk, print, exit): ").strip().lower()
+        if command == "search":
+            word = input("Enter word to search: ").strip()
+            count = avl.tree_search(word)
+            print(f"Occurrences of '{word}': {count}")
+        elif command == "insert":
+            word = input("Enter word to insert: ").strip()
+            count_before = avl.tree_search(word)
+            result = avl.insert(word)
+            if result == 0:
+                print(f"'{word}' inserted successfully.")
+            else:
+                print(f"'{word}' already exists in the tree.")
+        elif command == "delete":
+            word = input("Enter word to delete: ").strip()
+            count_before = avl.tree_search(word)
+            result = avl.delete(word)
+            if result > 0:
+                print(f"'{word}' deleted successfully.")
+            else:
+                print(f"'{word}' does not exist in the tree.")
+        elif command == "walk":
+            print("Tree Walk (In-order Traversal):")
+            avl.tree_walk()
+        elif command == "print":
+            print("Tree Structure:")
+            avl.tree_print()
+        elif command == "exit":
+            print("Exiting.")
+            break
+        else:
+            print("Invalid command.")
+
+if __name__ == "__main__":
+    main()
