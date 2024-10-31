@@ -1,0 +1,186 @@
+Test 1: Insertions and In-order Traversal
+In-order traversal: [10, 20, 25, 30, 40, 50]
+               R----50
+          R----40
+     Root----30
+               R----25
+          L----20
+               L----10
+
+Balance factors after insertions:
+Node 10 has balance factor 0
+Node 20 has balance factor 0
+Node 25 has balance factor 0
+Node 30 has balance factor 0
+Node 40 has balance factor -1
+Node 50 has balance factor 0
+--------------------------------------------------
+Test 2: Search Functionality
+Key 25 found in the AVL tree.
+Key 15 not found in the AVL tree.
+Key 50 found in the AVL tree.
+--------------------------------------------------
+Test 3: Deletions and Balance Verification
+Deleting key 20
+In-order traversal after deletion: [10, 25, 30, 40, 50]
+               R----50
+          R----40
+     Root----30
+          L----25
+               L----10
+Balance factors after deletion:
+Node 10 has balance factor 0
+Node 25 has balance factor 1
+Node 30 has balance factor 0
+Node 40 has balance factor -1
+Node 50 has balance factor 0
+------------------------------
+Deleting key 30
+In-order traversal after deletion: [10, 25, 40, 50]
+          R----50
+     Root----40
+          L----25
+               L----10
+Balance factors after deletion:
+Node 10 has balance factor 0
+Node 25 has balance factor 1
+Node 40 has balance factor 1
+Node 50 has balance factor 0
+------------------------------
+Deleting key 10
+In-order traversal after deletion: [25, 40, 50]
+          R----50
+     Root----40
+          L----25
+Balance factors after deletion:
+Node 25 has balance factor 0
+Node 40 has balance factor 0
+Node 50 has balance factor 0
+------------------------------
+Test 4: Handling Duplicates
+Inserting duplicate key 25
+Inserting duplicate key 40
+In-order traversal after inserting duplicates: [25, 40, 50]
+          R----50
+     Root----40
+          L----25
+Balance factors after inserting duplicates:
+Node 25 has balance factor 0
+Node 40 has balance factor 0
+Node 50 has balance factor 0
+--------------------------------------------------
+Test 5: Extensive Insertions and Deletions
+Extensive insertions passed.
+------------------------------
+Extensive deletions passed.
+------------------------------
+Final AVL Tree:
+                              R----986
+                         R----983
+                              L----964
+                    R----914
+                              R----883
+                                   L----876
+                         L----868
+                              L----850
+               R----829
+                              R----778
+                         R----760
+                    L----759
+                              R----715
+                         L----693
+                              L----678
+          R----655
+                              R----651
+                         R----644
+                    R----605
+                         L----566
+               L----559
+                         R----518
+                    L----471
+                         L----465
+                              L----433
+     Root----390
+                         R----388
+                    R----380
+                         L----374
+               R----368
+                         R----353
+                    L----349
+                              R----345
+                         L----297
+          L----285
+                         R----229
+                              L----215
+                    R----204
+                              R----197
+                         L----167
+                              L----160
+               L----115
+                                   R----104
+                              R----100
+                         R----96
+                                   R----50
+                              L----47
+                                   L----45
+                    L----40
+                              R----28
+                         L----26
+                              L----25
+                                   L----7
+Final Balance factors:
+Node 7 has balance factor 0
+Node 25 has balance factor 1
+Node 26 has balance factor 1
+Node 28 has balance factor 0
+Node 40 has balance factor 0
+Node 45 has balance factor 0
+Node 47 has balance factor 0
+Node 50 has balance factor 0
+Node 96 has balance factor 0
+Node 100 has balance factor -1
+Node 104 has balance factor 0
+Node 115 has balance factor 1
+Node 160 has balance factor 0
+Node 167 has balance factor 0
+Node 197 has balance factor 0
+Node 204 has balance factor 0
+Node 215 has balance factor 0
+Node 229 has balance factor 1
+Node 285 has balance factor 1
+Node 297 has balance factor -1
+Node 345 has balance factor 0
+Node 349 has balance factor 1
+Node 353 has balance factor 0
+Node 368 has balance factor 1
+Node 374 has balance factor 0
+Node 380 has balance factor 0
+Node 388 has balance factor 0
+Node 390 has balance factor 0
+Node 433 has balance factor 0
+Node 465 has balance factor 1
+Node 471 has balance factor 1
+Node 518 has balance factor 0
+Node 559 has balance factor 0
+Node 566 has balance factor 0
+Node 605 has balance factor -1
+Node 644 has balance factor -1
+Node 651 has balance factor 0
+Node 655 has balance factor -1
+Node 678 has balance factor 0
+Node 693 has balance factor 0
+Node 715 has balance factor 0
+Node 759 has balance factor 0
+Node 760 has balance factor -1
+Node 778 has balance factor 0
+Node 829 has balance factor -1
+Node 850 has balance factor 0
+Node 868 has balance factor -1
+Node 876 has balance factor 0
+Node 883 has balance factor 1
+Node 914 has balance factor 1
+Node 964 has balance factor 0
+Node 983 has balance factor 0
+Node 986 has balance factor 0
+--------------------------------------------------
+All tests passed successfully!
