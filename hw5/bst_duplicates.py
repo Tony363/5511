@@ -89,18 +89,21 @@ class BST:
     def tree_print(self):
         self._print_tree(self.root, "", True)
 
-    def _print_tree(self, node, indent, last):
-        if node:
-            print(indent, end='')
-            if last:
-                print("R----", end='')
-                indent += "     "
-            else:
-                print("L----", end='')
-                indent += "|    "
-            print(f"{node.key}({node.count})")
-            self._print_tree(node.left, indent, False)
-            self._print_tree(node.right, indent, True)
+    def _printTree(self, root, indent="", last='updown'):
+        if root is None:
+            return
+        indent += "     "
+        self.printTree(root.right, indent, last='right')
+
+        print(indent, end='')
+        if last == 'updown':
+            print("Root----", end='')
+        elif last == 'right':
+            print("R----", end='')
+        elif last == 'left':
+            print("L----", end='')
+        print(root.key)
+        self.printTree(root.left, indent, last='left')
 
 # Interactive User Interface
 def main():
