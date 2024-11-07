@@ -4,14 +4,19 @@ class BTreeNode:
         self.is_leaf = is_leaf
         self.keys = []
         self.children = []
-
+        
     def __str__(self, level=0):
-        result = "Level " + str(level) + " " + str(self.keys) + "\n"
-        if not self.is_leaf:
-            for child in self.children:
-                result += child.__str__(level + 1)
-        return result
+        result = ""
+        right_tree = self.children[len(self.children)//2:]
+        left_tree = self.children[:len(self.children)//2]
+        for child in right_tree:
+            result += child.__str__(level + 1)
 
+        result += "Level " + str(level) + " \t"*level + str(self.keys) + "\n"
+
+        for child in left_tree:
+            result += child.__str__(level + 1)
+        return result
 
 class BTree:
     def __init__(self, m):
