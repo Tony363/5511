@@ -21,7 +21,6 @@ class BTreeNode:
         for child in right_tree[::-1]:
             if child.keys and self.keys and  child.keys[-1] < self.keys[-1]:
                 result += "Level " + str(level) + " " + "\t"*level + str(self.keys[idx]) + "\n"
-                # result += "wtf     " + "\t"*(level) + "--\n"
                 idx -= 1
             result += child.display(level + 1)
             result += "        " + "\t"*(level) + "--\n" if idx == -1 else ""
