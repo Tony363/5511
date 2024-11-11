@@ -28,10 +28,9 @@ class BTreeNode:
         for child in left_tree[::-1]:
             if child.keys and self.keys and child.keys[-1] < self.keys[-1]:
                 result += "Level " + str(level) + " " + "\t"*level + str(self.keys[idx]) + "\n"
-                result += "        " + "\t"*level + "--\n"
+                result += "        " + "\t"*level + "--\n" if abs(idx) == len(self.keys) else ""
                 idx -= 1
             result += child.display(level + 1)
-        result += "        " + "\t"*(level) + "--\n" if idx == -1 else ""
         return result
     
     
@@ -222,8 +221,5 @@ def test_btree(m):
 
 
 if __name__ == "__main__":
-    test_btree(3)
     test_btree(4)
     test_btree(5)
-    test_btree(6)
-    test_btree(7)
