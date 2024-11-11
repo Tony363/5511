@@ -54,6 +54,25 @@ class BTree:
             return None
         else:
             return self.search(k, x.children[i])
+        
+    def insert(self, k):
+        """Insert key k into B-tree"""
+        root = self.root
+        if len(root.keys) == self.m - 1:
+            s = BTreeNode(self.m)
+            s.children.insert(0, root)
+            s.leaf = False
+            self.root = s
+            self.split_child(s, 0)
+            self._insert_non_full(s, k)
+        else:
+            self._insert_non_full(root, k)
+            
+    def delete(self, k):
+        """Delete key k from B-tree"""
+        self._delete(self.root, k)
+        if len(self.root.keys) == 0 and not self.root.leaf:
+            self.root = self.root.children[0]
 
     def split_child(self, x, i):
         """Split the child x.children[i] of node x"""
@@ -72,18 +91,6 @@ class BTree:
         x.keys.insert(i, mid_key)
         # No need to update num_keys, as we're using len(x.keys)
 
-    def insert(self, k):
-        """Insert key k into B-tree"""
-        root = self.root
-        if len(root.keys) == self.m - 1:
-            s = BTreeNode(self.m)
-            s.children.insert(0, root)
-            s.leaf = False
-            self.root = s
-            self.split_child(s, 0)
-            self._insert_non_full(s, k)
-        else:
-            self._insert_non_full(root, k)
 
     def _insert_non_full(self, x, k):
         """Insert key k into non-full node x"""
@@ -103,12 +110,6 @@ class BTree:
                 if k > x.keys[i]:
                     i += 1
             self._insert_non_full(x.children[i], k)
-
-    def delete(self, k):
-        """Delete key k from B-tree"""
-        self._delete(self.root, k)
-        if len(self.root.keys) == 0 and not self.root.leaf:
-            self.root = self.root.children[0]
 
     def _delete(self, x, k):
         t = (self.m + 1) // 2
