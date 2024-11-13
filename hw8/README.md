@@ -5,7 +5,7 @@
 Change the Dynamic Programming algorithm for the "Longest Common Subsequence" into a DP algorithm for the "Longest Common Substring" where a substring must be continuous.
 
 * Specify the data structure and the recursion for the problem in a format similar to how the "Longest Common Subsequence" problem is specified and describe the similarity and difference between these two problems.
-* Write the latex algorithm for the new problem for me to coppy to overleaf to compile.
+* Write the latex algorithm for the new problem.
 * Analyze the time and space costs of the algorithm by solving the recurrence relation of the algorithm into a mathematical expression for the time complexity of T(n). Do not use Big O notations.
 * Implement the algorithm in python and report the testing results. For each testing case, include the input, output, and the content of the data structure used to get the output. Provide extensive testing cases.
 
