@@ -31,6 +31,9 @@ if __name__ == "__main__":
         ("abcde", "abfde"),
         ("abcXYZabc", "XYZabcabc"),
         ("ABABC", "BABCA"),
+        # no common substring
+        # both string identical
+        
     ]
 
     for X, Y in test_cases:
