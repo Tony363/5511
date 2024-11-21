@@ -19,12 +19,12 @@ There are two candidate solutions:
 
 * Call a revised version of DFS on every vertex u to find the smallest reachable vertex v.
 
-* Construct the transpose of G, G^T, then call a revised version of DFS starting at the vertices v in increasing order and marks all reachable vertices u that have not be marked yet as u:v, until all the vertices are labeled.
+* Construct the transpose of G, G<sup>T</sup>, then call a revised version of DFS starting at the vertices v in increasing order and marks all reachable vertices u that have not be marked yet as u:v, until all the vertices are labeled.
 
 ## Tasks:
 
-1.  For each of the two solutions, compare the efficiency of using an adjacency matrix and an adjacency list to represent the graph. Derive the T(n) time complexity by solving the recurrence relation for each without using Big O notations
-2. Write the most efficient algorithm you can think of to solve the problem.
-3. Implement the algorithm.
-4. Test the program with sample graphs stored in text files.
+1. For each of the two solutions, compare the efficiency of using an adjacency matrix and an adjacency list to represent the graph. Derive the T(n) time complexity by solving the recurrence relation for each without using Big O notations.
+2. Write the most efficient algorithm for each of the 2 solutions.
+3. Implement the most efficient algorithm in python based on the analysis of the best algorithm in task 1.
+4. Extensively test the algorithm with sample graphs stored in text files for all significant edge cases.
 

@@ -1,0 +1,24 @@
+
+Testing with tests/disconnected_graph.txt:
+1:1
+2:2
+3:3
+
+Testing with tests/self_loops.txt:
+1:1
+2:2
+3:3
+
+Testing with tests/complete_graph.txt:
+1:1
+2:1
+3:1
+
+Testing with tests/graph_cycles.txt:
+1:4
+2:4
+3:4
+4:4
+
+Testing with tests/single_vertex.txt:
+1:1
