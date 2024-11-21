@@ -1,6 +1,8 @@
 # Homework 10
 Let G = (V, E) be a directed graph in which the vertices are labeled from 1 to |V|. For each vertex u, find the vertex v that has the smallest label among all the vertices reachable from u (including u itself).
 
+![](./sample_graph.jpg)
+
     Nodes: 1, 2, 3, 4, 5, 6
     Edges:
 
