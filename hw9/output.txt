@@ -1,0 +1,12 @@
+Scheduled Tasks and Completion Times:
+Task a2: Completion Time = 3
+Task a1: Completion Time = 8
+
+Minimized Average Completion Time: 5.5
+Scheduled Tasks and Completion Times:
+Task a2: Completion Time = 1
+Task a1: Completion Time = 3
+Task a4: Completion Time = 6
+Task a3: Completion Time = 10
+
+Minimized Average Completion Time: 5.0
