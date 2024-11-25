@@ -21,7 +21,7 @@ There are two candidate solutions:
 
 * Call a revised version of DFS on every vertex u to find the smallest reachable vertex v.
 
-* Construct the transpose of G, G<sup>T</sup>, then call a revised version of DFS starting at the vertices v in increasing order and marks all reachable vertices u that have not be marked yet as u:v, until all the vertices are labeled.
+* Construct the transpose of G, G<sup>T</sup>, then call a revised version of DFS starting at the vertices v in increasing order and mark all reachable vertices u that have not be marked yet as u:v, until all the vertices are labeled.
 
 ## Tasks:
 
