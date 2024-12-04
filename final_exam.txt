@@ -1,0 +1,9 @@
+No all pairs shortest paths
+cumulative but focused on second half
+2 hours
+should now concept of whether red black tree according to definition (no need insertion deletion)
+B trees
+kinds of problems quite similar to midterm
+No detail mathemtical proofs, probability proofs, T(n) complexities
+
+will judge n^2 or nlogn without detailed mathemtical proof
